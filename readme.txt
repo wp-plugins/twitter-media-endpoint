@@ -50,6 +50,9 @@ Initial release
 = 0.2 =
 Found a bug if you de-authorize your Twitter app, then want to re-authorize.
 
+= 0.3 =
+Forgot to change the version number...
+
 == Upgrade Notice ==
 
 = 0.1 =
@@ -57,3 +60,6 @@ Initial release
 
 = 0.2 =
 Found a bug if you de-authorize your Twitter app, then want to re-authorize.
+
+= 0.3 =
+Forgot to change the version number...
