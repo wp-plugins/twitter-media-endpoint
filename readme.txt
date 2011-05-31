@@ -4,7 +4,7 @@ Donate link: http://sterlinganderson.net/twitter-media
 Tags: twitter, media, image, video, mobile
 Requires at least: 3.1
 Tested up to: 3.1.3
-Stable tag: 0.1
+Stable tag: 0.2
 
 The Twitter Media Endpoint plugin allows you to turn your Wordpress install in to a Twitpic/YFrog like service for your mobile device.
 
@@ -47,7 +47,13 @@ This plugin has been test with the official Twitter app on the iPhone and iPad, 
 = 0.1 =
 Initial release
 
+= 0.2 =
+Found a bug if you de-authorize your Twitter app, then want to re-authorize.
+
 == Upgrade Notice ==
 
 = 0.1 =
 Initial release
+
+= 0.2 =
+Found a bug if you de-authorize your Twitter app, then want to re-authorize.

@@ -254,7 +254,12 @@ function twitter_media_profile() {
   		. '<a href="http://twitter.com/' . $twitterInfo->screen_name . '"><img src="' . $twitterInfo->profile_image_url . '" style="vertical-align:-32px" /></a>&nbsp;&nbsp;'
   		. '<a href="http://twitter.com/' . $twitterInfo->screen_name . '">@' . $twitterInfo->screen_name . '</a>';
   	} catch ( Exception $e ) {
-  		$url = $twitterObj->getAuthorizeUrl(null,array('oauth_callback' => admin_url( 'profile.php' )));
+  		delete_user_meta( $current_user->ID, 'twitter_media_user_token');
+  		delete_user_meta( $current_user->ID, 'twitter_media_user_secret');
+  		delete_user_meta( $current_user->ID, 'twitter_media_user_id');
+  		unset($twitterObj);
+  		$twitterObj = new EpiTwitter(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET);
+   		$url = $twitterObj->getAuthorizeUrl(null,array('oauth_callback' => admin_url( 'profile.php' )));
   		echo '<a href="' . $url . '"><img src="' . plugins_url( 'includes/sign-in-with-twitter-d.png' , __FILE__ ) . '" ></a>&nbsp;Allow Wordpress to access Twitter</p>';
   	} 	
 }
