@@ -1,0 +1,51 @@
+=== Plugin Name ===
+Contributors: sterling
+Donate link: http://sterlinganderson.net/twitter-media
+Tags: twitter, media, image, video, mobile
+Requires at least: 3.1
+Tested up to: 3.1.3
+Stable tag: 0.1
+
+The Twitter Media Endpoint plugin allows you to turn your Wordpress install in to a Twitpic/YFrog like service for your mobile device.
+
+== Description ==
+
+Twitter Media Endpoint allows you to use your Wordpress install with your Twitter client to upload media, and host it on your site, where you maintain control and ownership.
+
+When you use a service like Twitpic to upload media your media falls under that site's terms. You often lose most, if not all rights to your photos. With Twitter Media Endpoint you are uploading you images to you personal blog. A site you own have control over, thus you maintain control of your work.
+
+Curious about many photo sharing sites' terms? Here are some news stories:
+
+[http://www.zdnet.com/blog/projectfailures/why-i-abandoned-twitpic-for-photo-sharing/13365]
+[http://thenextweb.com/industry/2011/05/11/your-photos-not-so-according-to-many-popular-photo-sharing-apps/]
+[http://boingboing.net/2011/05/12/all-your-pics-are-be.html]
+
+== Installation ==
+
+1. Place the twitter-media-endpoint folder in the `/wp-content/plugins/` directory
+1. Activate the plugin through the 'Plugins' menu in WordPress
+1. In your Admin section under **Media** you need to set up a Twitter application, and set an endpoint URL at a minimum.
+1. Each Wordpress user must authorize the new Twitter app you created in order to use the new media endpoint in their Twitter app
+1. In your Twitter application set your Custom Media Upload Service to the URL you set in your Wordpress Media Settings.
+
+== Frequently Asked Questions ==
+
+= What Twitter clients will this work with? =
+
+This plugin has been test with the official Twitter app on the iPhone and iPad, and Twitterrific on the iPhone, iPad, and Mac.
+
+
+== Screenshots ==
+
+1. Wordpress Media Settings page options.
+2. User Settings after user has authorized plugin.
+
+== Changelog ==
+
+= 0.1 =
+Initial release
+
+== Upgrade Notice ==
+
+= 0.1 =
+Initial release
