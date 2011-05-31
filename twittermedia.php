@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Twitter Media Service
-Plugin URI: http://sterlinganderson.net/twitter-media-service
-Description: Allow your WP install to be a Twitter Media Service
+Plugin Name: Twitter Media Endpoint
+Plugin URI: http://sterlinganderson.net/twitter-media-endpoint
+Description: Allow your WP install to be a Twitter Media Endpoint
 Version: 0.1
 Author: Sterling Anderson
 Author URI: http://sterlinganderson.net
@@ -28,9 +28,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-?>
-
-<?php
 
 require_once(__DIR__ . "/includes/EpiCurl.php");
 require_once(__DIR__ . "/includes/EpiOAuth.php");
@@ -130,7 +127,7 @@ function twitter_media_admin_init() {
 	// Add the section to reading settings so we can add our
 	 // fields to it
 	 	add_settings_section('twitter_media_section',
-			'Twitter Media Service Options',
+			'Twitter Media Endpoint Options',
 			'twitter_media_options_section_callback',
 			'media');
 
@@ -191,7 +188,7 @@ add_action('edit_user_profile', 'twitter_media_profile');
 //
 
 function twitter_media_options_section_callback() {
-	echo '<p>You need to register a new application with Twitter here: <a href="https://dev.twitter.com">https://dev.twitter.com</a><br />Everything you enter for your application can remain at the default, except enter your website URL for the "Application Website", and "Callback URL" fields.<br />After you do that enter the Consumer Key and Consumer Secret for that application below.</p>';
+	echo '<p>You need to register a new application with Twitter here: <a href="https://dev.twitter.com">https://dev.twitter.com</a><br />Everything you enter for your application can remain at the default, except enter your website URL for the "Application Website", and "Callback URL" fields. After you do that enter the Consumer Key and Consumer Secret for that application below.</p>';
 }
 
 function twitter_media_consumer_key_callback() {
@@ -203,7 +200,7 @@ function twitter_media_consumer_secret_callback() {
 }
 
 function twitter_media_url_endpoint_callback() {
-	echo '<input name="twitter_media_url_endpoint" type="text" value="' . get_option('twitter_media_url_endpoint') . '" /> What URL do you want your Twitter Media Service to have? (http://example.com/TWITTERMEDIA)<br />This is the custom upload service URL you will use in your Twitter client.';
+	echo '<input name="twitter_media_url_endpoint" type="text" value="' . get_option('twitter_media_url_endpoint') . '" /> What URL do you want your Twitter Media Endpoint to have? (http://example.com/TWITTERMEDIA)<br />This is the custom upload service URL you will use in your Twitter client.';
 }
 
 function twitter_media_gallery_page_callback() {
@@ -240,7 +237,7 @@ function twitter_media_profile() {
   	}
 	
 	//Heading
-	echo '<h3>In order to use Wordpress as a Twitter media service you must allow Twitter access.</h3>';
+	echo '<h3>In order to use Wordpress as a Twitter media endpoint you must allow Twitter access.</h3>';
 	
 	//Get the meta data from the WP DB
 	$user_token = 	get_user_meta( $current_user->ID, 'twitter_media_user_token', true);
@@ -259,8 +256,6 @@ function twitter_media_profile() {
   	} catch ( Exception $e ) {
   		$url = $twitterObj->getAuthorizeUrl(null,array('oauth_callback' => admin_url( 'profile.php' )));
   		echo '<a href="' . $url . '"><img src="' . plugins_url( 'includes/sign-in-with-twitter-d.png' , __FILE__ ) . '" ></a>&nbsp;Allow Wordpress to access Twitter</p>';
-  	}
-  	
+  	} 	
 }
-
 ?>
