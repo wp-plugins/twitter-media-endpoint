@@ -12,13 +12,15 @@ The Twitter Media Endpoint plugin allows you to turn your Wordpress install in t
 
 Twitter Media Endpoint allows you to use your Wordpress install with your Twitter client to upload media, and host it on your site, where you maintain control and ownership.
 
+This is an initial release, and my first WP plugin, please report back any issues.
+
 When you use a service like Twitpic to upload media your media falls under that site's terms. You often lose most, if not all rights to your photos. With Twitter Media Endpoint you are uploading you images to you personal blog. A site you own have control over, thus you maintain control of your work.
 
 Curious about many photo sharing sites' terms? Here are some news stories:
 
-[http://www.zdnet.com/blog/projectfailures/why-i-abandoned-twitpic-for-photo-sharing/13365]
-[http://thenextweb.com/industry/2011/05/11/your-photos-not-so-according-to-many-popular-photo-sharing-apps/]
-[http://boingboing.net/2011/05/12/all-your-pics-are-be.html]
+http://www.zdnet.com/blog/projectfailures/why-i-abandoned-twitpic-for-photo-sharing/13365
+http://thenextweb.com/industry/2011/05/11/your-photos-not-so-according-to-many-popular-photo-sharing-apps/
+http://boingboing.net/2011/05/12/all-your-pics-are-be.html
 
 == Installation ==
 
