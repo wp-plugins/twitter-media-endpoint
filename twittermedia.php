@@ -3,7 +3,7 @@
 Plugin Name: Twitter Media Endpoint
 Plugin URI: http://sterlinganderson.net/twitter-media-endpoint
 Description: Allow your WP install to be a Twitter Media Endpoint
-Version: 0.4
+Version: 0.5
 Author: Sterling Anderson
 Author URI: http://sterlinganderson.net
 License: MIT
@@ -29,11 +29,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-require_once(__DIR__ . "/includes/EpiCurl.php");
-require_once(__DIR__ . "/includes/EpiOAuth.php");
-require_once(__DIR__ . "/includes/EpiSequence.php");
-require_once(__DIR__ . "/includes/EpiTwitter.php");
-require_once(__DIR__ . "/includes/TwitterOAuthEcho.php");
+require_once(dirname(__FILE__) . "/includes/EpiCurl.php");
+require_once(dirname(__FILE__) . "/includes/EpiOAuth.php");
+require_once(dirname(__FILE__) . "/includes/EpiSequence.php");
+require_once(dirname(__FILE__) . "/includes/EpiTwitter.php");
+require_once(dirname(__FILE__) . "/includes/TwitterOAuthEcho.php");
 
 define('TWITTER_CONSUMER_KEY', get_option('twitter_media_consumer_key'));  
 define('TWITTER_CONSUMER_SECRET', get_option('twitter_media_consumer_secret'));
