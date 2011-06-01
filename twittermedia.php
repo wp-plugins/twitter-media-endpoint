@@ -3,7 +3,7 @@
 Plugin Name: Twitter Media Endpoint
 Plugin URI: http://sterlinganderson.net/twitter-media-endpoint
 Description: Allow your WP install to be a Twitter Media Endpoint
-Version: 0.3
+Version: 0.4
 Author: Sterling Anderson
 Author URI: http://sterlinganderson.net
 License: MIT
