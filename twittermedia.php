@@ -3,7 +3,7 @@
 Plugin Name: Twitter Media Endpoint
 Plugin URI: http://sterlinganderson.net/twitter-media-endpoint
 Description: Allow your WP install to be a Twitter Media Endpoint
-Version: 0.5
+Version: 0.6
 Author: Sterling Anderson
 Author URI: http://sterlinganderson.net
 License: MIT
@@ -41,6 +41,7 @@ define('TWITTER_CONSUMER_SECRET', get_option('twitter_media_consumer_secret'));
 function twitter_media_init(){
 
 	global $wpdb;
+	//global $wp_locale;
 	
 	$uri = ltrim($_SERVER['REQUEST_URI'], "/");
 	$uri = rtrim($uri, "/");
@@ -79,14 +80,16 @@ function twitter_media_init(){
 		//IMPORT IMAGE HERE
 					wp_set_current_user( $wp_user_id );
 					$extension = end(explode(".", $_FILES['media']['name']));
-					$file_name = 'twitter-' . date('Ymdhis') . "." . $extension;
+					$date_format = get_option('date_format') . ' ' . get_option('time_format');
+					$datetime = date($date_format, current_time("timestamp"));
+					$file_name = 'twitter-' . $datetime . "." . $extension;
 					$upload = wp_upload_bits($file_name, null, file_get_contents($_FILES["media"]["tmp_name"]));		
 					
 					if ($upload['error'] == false) {
 						$wp_filetype = wp_check_filetype(basename($upload['file']), null );
 						$attachment = array(
 							'post_mime_type' => $wp_filetype['type'],
-							'post_title' => 'Twitter - ' . date('Y/m/d \a\t g:i A'),
+							'post_title' => 'Twitter - ' . $datetime,
 							'post_content' => $_POST['message'],
 							'post_status' => 'inherit');
 						$attach_id = wp_insert_attachment( $attachment, $upload['file'], get_option('twitter_media_gallery_page'));
