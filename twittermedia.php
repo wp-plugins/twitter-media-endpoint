@@ -3,7 +3,11 @@
 Plugin Name: Twitter Media Endpoint
 Plugin URI: http://sterlinganderson.net/twitter-media-endpoint
 Description: Allow your WP install to be a Twitter Media Endpoint
+<<<<<<< HEAD
 Version: 0.6
+=======
+Version: 0.65
+>>>>>>> Initial check in
 Author: Sterling Anderson
 Author URI: http://sterlinganderson.net
 License: MIT
@@ -29,10 +33,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+<<<<<<< HEAD
 require_once(dirname(__FILE__) . "/includes/EpiCurl.php");
 require_once(dirname(__FILE__) . "/includes/EpiOAuth.php");
 require_once(dirname(__FILE__) . "/includes/EpiSequence.php");
 require_once(dirname(__FILE__) . "/includes/EpiTwitter.php");
+=======
+session_start();
+
+require_once(dirname(__FILE__) . "/includes/tmhOAuth.php");
+require_once(dirname(__FILE__) . "/includes/tmhUtilities.php");
+>>>>>>> Initial check in
 require_once(dirname(__FILE__) . "/includes/TwitterOAuthEcho.php");
 
 define('TWITTER_CONSUMER_KEY', get_option('twitter_media_consumer_key'));  
@@ -46,7 +57,10 @@ function twitter_media_init(){
 	$uri = ltrim($_SERVER['REQUEST_URI'], "/");
 	$uri = rtrim($uri, "/");
 	if ($uri == get_option('twitter_media_url_endpoint')) {
+<<<<<<< HEAD
 		
+=======
+>>>>>>> Initial check in
 		//Authenticate the user to Twitter using OAuth Echo
 		$oauthecho = new TwitterOAuthEcho();
 		$oauthecho->userAgent = $_POST['source'];
@@ -74,6 +88,7 @@ function twitter_media_init(){
 				$user_token = $result->user_token;
 				$user_secret = $result->user_secret;
 				
+<<<<<<< HEAD
 				$twitterObj = new EpiTwitter(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, $user_token, $user_secret);
 				try {
 					$twitterInfo = $twitterObj->get_accountVerify_credentials();
@@ -88,10 +103,23 @@ function twitter_media_init(){
 					if ($upload['error'] == false) {
 						$wp_filetype = wp_check_filetype(basename($upload['file']), null );
 						$attachment = array(
+=======
+				wp_set_current_user( $wp_user_id );
+				$extension = end(explode(".", $_FILES['media']['name']));
+				$date_format = get_option('date_format') . ' ' . get_option('time_format');
+				$datetime = date($date_format, current_time("timestamp"));
+				$file_name = 'twitter-' . $datetime . "." . $extension;
+				$upload = wp_upload_bits($file_name, null, file_get_contents($_FILES["media"]["tmp_name"]));		
+					
+				if ($upload['error'] == false) {
+					$wp_filetype = wp_check_filetype(basename($upload['file']), null );
+					$attachment = array(
+>>>>>>> Initial check in
 							'post_mime_type' => $wp_filetype['type'],
 							'post_title' => 'Twitter - ' . $datetime,
 							'post_content' => $_POST['message'],
 							'post_status' => 'inherit');
+<<<<<<< HEAD
 						$attach_id = wp_insert_attachment( $attachment, $upload['file'], get_option('twitter_media_gallery_page'));
 						// you must first include the image.php file
 						// for the function wp_generate_attachment_metadata() to work
@@ -120,6 +148,22 @@ function twitter_media_init(){
 			if (!headers_sent()) {
 				header('HTTP/1.0 ' . $oauthecho->resultHttpCode);
 				echo $message;
+=======
+					$attach_id = wp_insert_attachment( $attachment, $upload['file'], get_option('twitter_media_gallery_page'));
+					// you must first include the image.php file
+					// for the function wp_generate_attachment_metadata() to work
+					require_once(ABSPATH . 'wp-admin/includes/image.php');
+					$attach_data = wp_generate_attachment_metadata( $attach_id, $upload['file'] );
+					wp_update_attachment_metadata( $attach_id, $attach_data );
+					if (get_option('twitter_media_send_shortlink') == "true") {
+						$url = wp_get_shortlink($attach_id);
+					} else {
+						$url = get_permalink($attach_id);
+					}
+					echo "<mediaurl>" . $url . "</mediaurl>";
+					exit;
+				}
+>>>>>>> Initial check in
 			}
 		}
 	}
@@ -227,6 +271,7 @@ function twitter_media_profile() {
 	global $current_user;
 	$current_user = wp_get_current_user();
 	
+<<<<<<< HEAD
 	$twitterObj = new EpiTwitter(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET);
 	
 	//The user has authorized the application through twitter. Save some user meta data
@@ -241,11 +286,18 @@ function twitter_media_profile() {
 	
 	//Heading
 	echo '<h3>In order to use Wordpress as a Twitter media endpoint you must allow Twitter access.</h3>';
+=======
+	$tmhOAuth = new tmhOAuth(array('consumer_key'    => TWITTER_CONSUMER_KEY,
+								   'consumer_secret' => TWITTER_CONSUMER_SECRET,));
+	
+	echo '<h3>Twitter authorization for Twitter Media Endpoint plugin</h3>';
+>>>>>>> Initial check in
 	
 	//Get the meta data from the WP DB
 	$user_token = 	get_user_meta( $current_user->ID, 'twitter_media_user_token', true);
 	$user_secret = 	get_user_meta( $current_user->ID, 'twitter_media_user_secret', true);
 	$user_id = 		get_user_meta( $current_user->ID, 'twitter_media_user_id', true);
+<<<<<<< HEAD
 
 	//Make sure none of the meta data fields were empty or we will need to re-authorize the app through Twitter
   	if ( $user_token != "" && $user_secret != "" && $user_id != "") {
@@ -266,4 +318,80 @@ function twitter_media_profile() {
   		echo '<a href="' . $url . '"><img src="' . plugins_url( 'includes/sign-in-with-twitter-d.png' , __FILE__ ) . '" ></a>&nbsp;Allow Wordpress to access Twitter</p>';
   	} 	
 }
+=======
+ 
+	// already got some credentials stored?
+	if ( !isset($_REQUEST['oauth_verifier']) && $user_token != '' && $user_secret != '' && $user_id != '' ) {
+		// Verify with Twitter that the user has authorized app
+		twitter_media_verify($user_token, $user_secret);
+	// Returning from Twitter after user has authorized us. Store user's token and secret.
+	} elseif (isset($_REQUEST['oauth_verifier'])) {
+		$tmhOAuth = new tmhOAuth(array(
+								'consumer_key'    => TWITTER_CONSUMER_KEY,
+								'consumer_secret' => TWITTER_CONSUMER_SECRET,
+							));
+		$tmhOAuth->config['user_token']  = $_SESSION['oauth']['oauth_token'];
+		$tmhOAuth->config['user_secret'] = $_SESSION['oauth']['oauth_token_secret'];
+		$code = $tmhOAuth->request('POST', $tmhOAuth->url('oauth/access_token', ''), array('oauth_verifier' => $_REQUEST['oauth_verifier']));
+		if ($code == 200) {
+			$_SESSION['access_token'] = $tmhOAuth->extract_params($tmhOAuth->response['response']);
+			unset($_SESSION['oauth']);
+			/* The user has been verified and the access tokens can be saved for future use */
+			update_user_meta( $current_user->ID, 'twitter_media_user_token', $_SESSION['access_token']['oauth_token']);
+			update_user_meta( $current_user->ID, 'twitter_media_user_secret', $_SESSION['access_token']['oauth_token_secret']);
+			update_user_meta( $current_user->ID, 'twitter_media_user_id', $_SESSION['access_token']['user_id']);
+			twitter_media_verify($_SESSION['access_token']['oauth_token'], $_SESSION['access_token']['oauth_token_secret']);
+		} else {
+			outputError($tmhOAuth);
+		}
+		session_end();
+	// App is not authorized
+	} else {
+		twitter_media_authorize();
+	}
+}
+
+function twitter_media_authorize() {
+	$tmhOAuth = new tmhOAuth(array('consumer_key' => TWITTER_CONSUMER_KEY, 'consumer_secret' => TWITTER_CONSUMER_SECRET));
+							
+	$params = array('oauth_callback' => tmhUtilities::php_self());
+		
+	$code = $tmhOAuth->request('POST', $tmhOAuth->url('oauth/request_token', ''), $params);
+		
+	if ($code == 200) {
+		$_SESSION['oauth'] = $tmhOAuth->extract_params($tmhOAuth->response['response']);
+		$authurl = $tmhOAuth->url("oauth/authorize", '') .  "?oauth_token={$_SESSION['oauth']['oauth_token']}";
+		echo '<a href="' . $authurl . '"><img style="vertical-align:middle" src="' . plugins_url( 'includes/sign-in-with-twitter-d.png' , __FILE__ ) . '" ></a>&nbsp;Allow Wordpress to access Twitter</p>';		
+	} else {
+		outputError($tmhOAuth);
+	}
+}
+
+function twitter_media_verify($user_token, $user_secret){
+	$tmhOAuth = new tmhOAuth(array('consumer_key'    => TWITTER_CONSUMER_KEY,
+								   'consumer_secret' => TWITTER_CONSUMER_SECRET,
+								   'user_token'  => $user_token,
+								   'user_secret' => $user_secret));
+	$code = $tmhOAuth->request('GET', $tmhOAuth->url('1/account/verify_credentials'));
+	if ($code == 200) {
+		$resp = json_decode($tmhOAuth->response['response']);
+		echo '<p><a href="http://twitter.com/' . $resp->screen_name . '"><img src="' . $resp->profile_image_url . '" style="float:left; padding-right:5px; vertical-align:middle" /></a>Twitter account '
+			. '<a href="http://twitter.com/' . $resp->screen_name . '">@' . $resp->screen_name . '</a><br />'
+			. ' is successfully authorized.</p>';
+		echo '<p style="clear=both">&nbsp;</p><p>Your Twitter media endpoint API URL is: <strong>' . site_url() . '/' . get_option('twitter_media_url_endpoint') . '</strong></p>';
+	} elseif ($code == 401) {
+		twitter_media_authorize();
+	} else {
+		outputError($tmhOAuth);
+	}
+}
+
+function outputError($tmhOAuth) {
+	echo 'Error: ' . $tmhOAuth->response['response'] . PHP_EOL;
+	tmhUtilities::pr($tmhOAuth);
+}
+
+
+
+>>>>>>> Initial check in
 ?>
