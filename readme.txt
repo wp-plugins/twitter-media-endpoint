@@ -75,6 +75,3 @@ Changed date and time of uploaded image to use date offset of WP install, not se
 
 = 0.7 = 
 Changed OAuth library to tmhOAuth (https://github.com/themattharris/tmhOAuth). Plugin should work with latest WP release.
-
-= 0.8 =
-I suck at subversion.
